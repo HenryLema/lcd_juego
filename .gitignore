@@ -1,0 +1,38 @@
+
+#include <LiquidCrystal.h>//libreria
+LiquidCrystal lcd (8, 9, 10, 11, 12, 13); //Crea la variable y establece los pins del display
+int i = 0;//contador
+int j = 1;//contador
+int k = 0;
+int tam;
+String dat;
+void setup() {
+  lcd.begin(16, 2);// fija el numero de caracteres y filas
+  Serial.begin(9600);
+}
+void loop()
+{
+  Serial.println("juego 1 ");//mensaje
+  lcd.setCursor(0,1);//fija el cursor
+  Serial.println("ingrese palabra ");
+  delay(1000);
+  dat = Serial.readString(); //registra dato ingresado
+  tam = dat.length();//tamano del dato
+  char vector[tam + 1];//crea una matriz segun el tamaño del dato
+  dat.toCharArray(vector, tam + 1);//conversion
+   for (; i < tam; i++) {// ciclo para imprimir la palabra
+    j = 1 - j;
+    lcd.setCursor(i, j);//posiciona el cursor
+    lcd.print(vector[i]);//imprime el caraster dentro del la matriz 5x8
+
+    delay(500);
+  }
+  i=16;
+  j = 1;
+  for (; i >= 0; i--) {//ciclo
+    j = 1 - j;// elimina lo que se imprimio
+    lcd.setCursor(i, j);//posiciona el cursor
+    lcd.print(' ');// al borrar deja el espacio
+    delay(300);
+  }
+}
